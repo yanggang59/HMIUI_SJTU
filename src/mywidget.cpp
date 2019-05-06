@@ -97,6 +97,7 @@ myWidget::myWidget(QWidget *parent) :
     //开启线程
     xcThread = new Thread;
     xcThread->start();
+
     nwThread = new Thread2;
     nwThread->start();
 
@@ -268,7 +269,8 @@ void myWidget::show_parameter(){
         get_real_speed(num_mon[19]);         //2913
         get_eng_thm(num_mon[28]);
         get_eng_oilpres(num_mon[29]);
-        get_eng_rev(num_mon[31]);
+
+        get_eng_rev(num_mon[26]);           //2715
 
 
     }else if(conflag == 1)
@@ -279,7 +281,7 @@ void myWidget::show_parameter(){
         /*
          * added on 2019.4.3
         */
-        getCutHeight(num_mon[33]);        //2815
+        getCutHeight(num_mon[27]);        //2815
         get_cut_width(num_mon[19]);       //2913
         get_water_rate(num_mon[9]);
         get_feed(num_mon[21]);
@@ -694,7 +696,7 @@ void myWidget::get_valve_state(int array[8]){
 
 }
 
-//复脱器转速
+//复脱器转速---18FF1203
 void myWidget::get_redischarge_machine(int array[8]){
     /* 0x18FF1203,字节0-7
      * 第0字节表示复脱器转速低位，第1字节表示复脱器转速高位，13位转速低报警，14位转速高报警，15位堵塞报警
@@ -745,7 +747,7 @@ void myWidget::get_redischarge_machine(int array[8]){
     }
 }
 
-//清选风扇等
+//清选风扇等 18FF1305
 void myWidget::get_clean_fan(int array[8]){
     /* 0x18FF1305,字节0-7
      * 第0字节表示清选风扇转速低位，第1字节表示清选风扇转速高位，13位转速低报警，14位转速高报警，15位堵塞报警
@@ -811,7 +813,7 @@ void myWidget::get_clean_fan(int array[8]){
 
 }
 
-//含水率等
+//含水率等----18FF1507
 void myWidget::get_water_rate(int array[8]){
     /* 0x18FF1507,字节0-7
      * 第0字节表示含水率低位，第1字节表示含水率高位
@@ -831,7 +833,7 @@ void myWidget::get_water_rate(int array[8]){
     ui->weight_wet->setText(tr("%1").arg(GrainWetweight));
 }
 
-//粮食干重
+//粮食干重-----18FF1607
 void myWidget::get_weight_dry(int array[8]){
     /* 0x18FF1607,字节0-7
      * 第0字节表示粮食干重低位，第1字节表示粮食干重高位
@@ -843,7 +845,7 @@ void myWidget::get_weight_dry(int array[8]){
 
 }
 
-//升运器转速
+//升运器转速-----18FF1707
 void myWidget::get_elevator_speed(int array[8]){
     /* 0x18FF1707,字节0-7
      * 更改到0x18ff1607：第0字节表示粮食干重低位，第1字节表示粮食干重高位
@@ -892,7 +894,8 @@ void myWidget::get_elevator_speed(int array[8]){
     }
 }
 
-//损失率和含杂率
+
+//损失率和含杂率-----18FF1809
 void myWidget::get_lose_rate(int array[8]){
     /* 0x18FF1809,字节0-7
      * 第0字节表示清选损失率
@@ -914,10 +917,10 @@ void myWidget::get_lose_rate(int array[8]){
     ui->dr_fan_impr_rate->setText(tr("%1").arg(ClearInclusionrate/10));
     ui->impr_rate->setText(tr("%1").arg(HanZaLevel));
     ui->l_crushrate->setText(tr("%1").arg(BrokenRate/10));
-
 }
 
-//空、前进、倒档
+
+//空、前进、倒档-----18FF1909
 void myWidget::get_gear_state(int array[8]){
     /* 0x18FF1909,字节0-7，11、10未定义；01开关闭合，信号触发；00开关未闭合，信号未触发
      * 第0字节第0-1位表示空挡N
@@ -934,7 +937,8 @@ void myWidget::get_gear_state(int array[8]){
     else                ui->eng_gear->setStyleSheet("");
 }
 
-//抛撒器角度和切碎器转速
+
+//抛撒器角度和切碎器转速-----18FF2011
 void myWidget::get_throw_angle(int array[8]){
     /* 0x18FF2011,字节0-7
      * 第0字节表示抛撒器角度低位，第1字节表示抛撒器角度高位

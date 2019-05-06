@@ -15,7 +15,7 @@ extern "C"{
 //#include "led_header.h"			//Led的头文件
 }
 
-extern int num_mon[34][8];          //所有id接收的数据综合
+extern int num_mon[30][8];          //所有id接收的数据综合
 
 /* 接收数据的线程 */
 class Thread: public QThread

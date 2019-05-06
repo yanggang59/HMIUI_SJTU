@@ -157,6 +157,12 @@ int can0_recv2(struct can_frame frame[])
     rfilter[13].can_id = 0x18FF2213;                    //导航辅助驾驶调节
     rfilter[13].can_mask = CAN_EFF_MASK;
 
+    rfilter[14].can_id = 0x18FF2715;                    //拨禾轮液压马达流量的低高值
+    rfilter[14].can_mask = CAN_EFF_MASK;
+
+    rfilter[15].can_id = 0x18FF2815;                    //拨禾轮液压马达进油压力的低高值
+    rfilter[15].can_mask = CAN_EFF_MASK;
+
     setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));	//设置过滤规则
 
     nbytes = read(s, frame, sizeof(*frame));
@@ -174,7 +180,6 @@ void can0_send(QByteArray data ,int id)
 
     int s = 0, nbytes= 0;
 
-    //unsigned long nbytes;
     struct sockaddr_can addr;
     struct ifreq ifr;		//s,addr,ifr都是为了将嵌套字和can接口连接
     struct can_frame frame;	//存储数据信息

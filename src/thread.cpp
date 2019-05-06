@@ -7,8 +7,8 @@
 #define SLEEP msleep(0)
 
 /**********************************************************************
- * Name: num_mon[34][8]
- * Description: used to define 8 bytes of data in 28 CAN id
+ * Name: num_mon[30][8]
+ * Description: used to define 8 bytes of data in 30 CAN id
  *       num_mon[0]  represents 18FFFEF0; num_mon[1]  represents 18FFFDF0;num_mon[2]  represents 18FF0803;
  *       num_mon[3]  represents 18FF0903; num_mon[4]  represents 18FF1003;num_mon[5]  represents 18FF1103;
  *       num_mon[6]  represents 18FF1203; num_mon[7]  represents 18FF1305;num_mon[8]  represents 18FF1405;
@@ -17,15 +17,13 @@
  *       num_mon[15] represents 18FF2111; num_mon[16] represents 18FF2213;num_mon[17] represents 18FF2313;
  *       num_mon[18] represents 18FF2413; num_mon[19] represents 18FF2913;num_mon[20] represents 18FF2515;
  *       num_mon[21] represents 18FF2615; num_mon[22] represents 18FF2717;num_mon[23] represents 18FF2817;
- *       num_mon[24] represents 18FF5030; num_mon[25] represents 18FF5130;num_mon[26] represents 18FF5230;
- *       num_mon[27] represents 18FF5330; num_mon[28] represents 18FEEE00;num_mon[29] represents 18FFEEF0;
- *       num_mon[30] represents 18FEF700; num_mon[31] represents 0CF00400;num_mon[32] represents 18FF2715;
- *       num_mon[33] represents 18FF2815;
+ *       num_mon[24] represents 18FEF700; num_mon[25] represents 0CF00400;num_mon[26] represents 18FF2715;
+ *       num_mon[27] represents 18FF2815; num_mon[28] represents 18FEEE00;num_mon[29] represents 18FEEF00;
  * Date: 2017-9-30
  * Author: shone
  **********************************************************************/
 
-int num_mon[34][8];
+int num_mon[30][8];
 int can_recv_flag = 0;	
 int get_flag = -1;     //区分是第几页页面
 
@@ -50,7 +48,7 @@ void Thread::run()
         warn_timer->stop();		//连续的关闭和开启定时器，这样就不会每隔五秒timeout了
         warn_timer->start(5000);
 
-        can_recv_flag = can0_recv(&frame_temp);	//得到CAN数据，储蓄在frame_temp里
+        can_recv_flag = can0_recv(&frame_temp);	//得到CAN数据，储蓄在frame_temp里,can0_recv return received bytes
 
         /* CAN的结构体数据转换成一般数组 */
         QByteArray bArray;
@@ -316,7 +314,7 @@ void Thread2::run()
             {
                 for(int j = 0; j < 8; j++)
                 {
-                    num_mon[30][j] = (int)frame_temp.data[j];
+                    num_mon[24][j] = (int)frame_temp.data[j];
                 }
                 SLEEP;
             }
@@ -325,7 +323,7 @@ void Thread2::run()
             {
                 for(int j = 0; j < 8; j++)
                 {
-                    num_mon[31][j] = (int)frame_temp.data[j];
+                    num_mon[25][j] = (int)frame_temp.data[j];
                 }
                 SLEEP;
             }
@@ -384,7 +382,7 @@ void Thread2::run()
             {
                 for(int j = 0; j < 8; j++)
                 {
-                    num_mon[32][j] = (int)frame_temp.data[j];
+                    num_mon[26][j] = (int)frame_temp.data[j];
                 }
                 SLEEP;
             }
@@ -392,7 +390,7 @@ void Thread2::run()
             {
                 for(int j = 0; j < 8; j++)
                 {
-                    num_mon[33][j] = (int)frame_temp.data[j];
+                    num_mon[27][j] = (int)frame_temp.data[j];
                 }
                 SLEEP;
             }
