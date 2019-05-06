@@ -174,41 +174,6 @@ int can0_recv2(struct can_frame frame[])
 }
 
 
-void can0_send(QByteArray data ,int id)
-{
-    QMutexLocker lock(&mutex);		//加锁，防止竞争
-
-    int s = 0, nbytes= 0;
-
-    struct sockaddr_can addr;
-    struct ifreq ifr;		//s,addr,ifr都是为了将嵌套字和can接口连接
-    struct can_frame frame;	//存储数据信息
-    //struct can_filter rfilter;	//过滤规则
-
-    s = socket(PF_CAN,SOCK_RAW,CAN_RAW);	//创建一个套接字
-
-    strncpy(ifr.ifr_name,"can0", sizeof(ifr.ifr_name)-1);
-    ifr.ifr_name[sizeof(ifr.ifr_name)-1] = '\0';
-    ioctl(s,SIOCGIFINDEX,&ifr);			//指定CAN0设备,得到索引
-
-    addr.can_family = AF_CAN;
-    addr.can_ifindex = ifr.ifr_ifindex;
-    bind(s,(struct sockaddr*)&addr,sizeof(addr));//将套接字与can0设备连接在一起
-
-    frame.can_id = CAN_EFF_FLAG| id;
-    frame.can_dlc = 8;
-
-    for(int i = 0; i<8; i++)
-    {
-    frame.data[i] = data.at(i);
-    }
-
-    setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-    nbytes = write(s, &frame, sizeof(frame));
-    close(s);
-
-}
-
 
 //can1 send
 void can1_send(QByteArray data ,int id)

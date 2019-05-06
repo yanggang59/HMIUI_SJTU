@@ -91,8 +91,8 @@ myWidget::myWidget(QWidget *parent) :
 
     conflag = ui->tabWidget->currentIndex();
 
-    QString threadText = QString("@0x%1").arg(quintptr(QThread::currentThreadId()), 16, 16, QLatin1Char('0'));
-    qDebug() << "main thread id is : " << threadText;
+    //QString threadText = QString("@0x%1").arg(quintptr(QThread::currentThreadId()), 16, 16, QLatin1Char('0'));
+    //qDebug() << "main thread id is : " << threadText;
 
     //开启线程
     xcThread = new Thread;
@@ -245,6 +245,7 @@ void myWidget::close_sys(){
 
 //显示数据
 void myWidget::show_parameter(){
+
     conflag = ui->tabWidget->currentIndex();
 
     get_flag = conflag;
@@ -269,7 +270,6 @@ void myWidget::show_parameter(){
         get_real_speed(num_mon[19]);         //2913
         get_eng_thm(num_mon[28]);
         get_eng_oilpres(num_mon[29]);
-
         get_eng_rev(num_mon[26]);           //2715
 
 
@@ -309,6 +309,7 @@ void myWidget::updateTime(){
     QString current=dt.toString("yyyy-MM-dd hh:mm:ss");
     emit sendTime(current);
 }
+
 void myWidget::set_watchdog(){
     int timeoutw;
     timerwdt=new QTimer(this);
@@ -496,7 +497,7 @@ void myWidget::get_motor_speed(int array[8]){
     }
 }
 
-//卸粮筒等
+//卸粮筒等-----18FF1003
 void myWidget::get_unload_btn(int array[8]){
     /* 0x18FF1003,字节0-7
      * 两位一个参数，00表示开关未闭合，信号未触发；01表示开关闭合，信号触发；10未定义；11未定义
@@ -610,7 +611,7 @@ void myWidget::get_unload_btn(int array[8]){
 
 }
 
-//电磁阀等
+//电磁阀等----18FF1103
 void myWidget::get_valve_state(int array[8]){
     /* 0x18FF1103,字节0-7
      * 两位一个参数，表示电磁阀状态，00未驱动输出状态；01驱动输出状态；10输出电流过高；11输出电流过低（被驱动设备未连接）

@@ -177,14 +177,26 @@ void ControlSetting::setvalid(){
         qDebug() << "arrctl5030(" << i << "):" << (int)arrctl5030.at(i);
         qDebug() << "arrctl5330(" << i << "):" << (int)arrctl5330.at(i);
     }
-    can0_send(arrctl5030,0x18FF5030);
-    can0_send(arrctl5330,0x18FF5330);
 
     /*
-     * added on 2019.4.3
+    *18FF5030是按需发送
+    *18FF5130、18FF5230、18FF5330是每隔500ms发送一次
+    *18FF5430、18FF5530是每隔1000ms发送一次
+    */
+    can0_send(arrctl5030,0x18FF5030);
+
+    /*
+     * added on 2019.4.3  every 500ms
     */
     can0_send(arrctl5130,0x18FF5130);
     can0_send(arrctl5230,0x18FF5230);
+    can0_send(arrctl5330,0x18FF5330);
+
+    /*
+     * added on 2019.5.6  every 1000ms
+    */
+    can0_send(arrctl5430,0x18FF5430);
+    can0_send(arrctl5530,0x18FF5530);
 
     this->hide();
 }

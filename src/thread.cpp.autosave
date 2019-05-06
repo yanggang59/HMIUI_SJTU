@@ -32,7 +32,6 @@ Thread::Thread()
 {
     stopped = false;	//析构函数的初始化
     warn_timer = new QTimer(this);
-
 }
 
 //控制器线程

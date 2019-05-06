@@ -112,7 +112,7 @@ private:
     QTimer *timer;
     QTimer *timerwdt;       //看门狗
     QTimer *tmpara;         //定时刷新界面
-    QTimer *DataSaveTimer;//数据存储定时器
+    QTimer *DataSaveTimer;  //数据存储定时器
     QTimer *EngineerDataSaveTimer;
 
     QPixmap pixmap;
